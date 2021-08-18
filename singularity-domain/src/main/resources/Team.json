@@ -1,0 +1,66 @@
+{
+  "ref": "alphas/Team",
+  "area": "Endeavour",
+  "stateDefs": [
+    {
+      "ref": "alphas/Team/Seeded",
+      "description": "Seeded",
+      "card": [
+        "Mission defined",
+        "Constraints known and defined",
+        "Growth mechanism in place",
+        "Composition defined",
+        "Responsibilities outlined",
+        "Required commitment level clear",
+        "Required competencies identified",
+        "Size determined",
+        "Governance rules defined",
+        "Leadership model selected"
+      ]
+    },
+    {
+      "ref": "alphas/Team/Formed",
+      "description": "Formed",
+      "card": [
+        "Individual responsibilities accepted and aligned to competencies",
+        "Enough members recruited",
+        "Roles understood",
+        "How to work understood",
+        "Members introduced",
+        "Members accepting work",
+        "External collaborators introduced",
+        "Communication mechanisms defined",
+        "Members commit to team"
+      ]
+    },
+    {
+      "ref": "alphas/Team/Collaborating",
+      "description": "Collaborating",
+      "card": [
+        "Works as one unit",
+        "Communication open and honest",
+        "Focused on missions",
+        "Members know each other"
+      ]
+    },
+    {
+      "ref": "alphas/Team/Performing",
+      "description": "Performing",
+      "card": [
+        "Consistently meeting commitments",
+        "Continuously adapting to change",
+        "Rework and backtracking minimized",
+        "Waste continuously eliminated"
+      ]
+    },
+    {
+      "ref": "alphas/Team/Adjourned",
+      "description": "Adjourned",
+      "card": [
+        "Responsibilities fulfilled",
+        "Members available to other teams",
+        "Mission concluded"
+      ]
+    }
+  ]
+}

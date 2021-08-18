@@ -1,0 +1,80 @@
+{
+  "ref": "alphas/Work",
+  "area": "Endeavour",
+  "stateDefs": [
+    {
+      "ref": "alphas/Work/Initiated",
+      "description": "Initiated",
+      "card": [
+        "Required result clear",
+        "Constraints clear",
+        "Funding stakeholders known",
+        "Initiator identified",
+        "Accepting stakeholders known",
+        "Initiator identified",
+        "Accepting stakeholders known",
+        "Source of funding clear",
+        "Priority clear"
+      ]
+    },
+    {
+      "ref": "alphas/Work/Prepared",
+      "description": "Commitments made",
+      "card": [
+        "Cost and effort estimated",
+        "Resource availability understood",
+        "Risk exposure understood",
+        "Acceptance criteria established",
+        "Sufficiently broken down to start",
+        "Tasks identified and prioritized",
+        "Credible plan in place",
+        "At least one team member ready",
+        "Integration points defined"
+      ]
+    },
+    {
+      "ref": "alphas/Work/Started",
+      "description": "Started",
+      "card": [
+        "Development started",
+        "Progress monitored",
+        "Definition of done in place",
+        "Acceptance criteria established",
+        "Tasks being progressed"
+      ]
+    },
+    {
+      "ref": "alphas/Work/UnderControl",
+      "description": "Under Control",
+      "card": [
+        "Tasks being completed",
+        "Unplanned work under control",
+        "Estimated revised to reflect performance",
+        "Progress measured",
+        "Re-work under control",
+        "Commitments consistently met"
+      ]
+    },
+    {
+      "ref": "alphas/Work/Concluded",
+      "description": "Concluded",
+      "card": [
+        "Only admin tasks left",
+        "Results achieved",
+        "Resulting system accepted"
+      ]
+    },
+    {
+      "ref": "alphas/Work/Closed",
+      "description": "Closed",
+      "card": [
+        "Lessons learned",
+        "Metrics available",
+        "Everything archived",
+        "Budget reconciled and closed",
+        "Team released",
+        "No outstanding, uncompleted tasks"
+      ]
+    }
+  ]
+}

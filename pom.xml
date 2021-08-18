@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.singularity</groupId>
+    <artifactId>singularity</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>singularity-domain</module>
+        <module>singularity-service</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <kotlin.version>1.5.21</kotlin.version>
+        <odo.version>0.0.9-SNAPSHOT</odo.version>
+        <junit.version>5.7.1</junit.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.singularity</groupId>
+                <artifactId>singularity-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.singularity</groupId>
+                <artifactId>singularity-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>net.odoframework</groupId>
+                <artifactId>odo-service</artifactId>
+                <version>${odo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.odoframework</groupId>
+                <artifactId>odo-container</artifactId>
+                <version>${odo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.odoframework</groupId>
+                <artifactId>odo-kotlin-dsl</artifactId>
+                <version>${odo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.odoframework</groupId>
+                <artifactId>odo-kotlin-service-dsl</artifactId>
+                <version>${odo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.litote.kmongo</groupId>
+                <artifactId>kmongo</artifactId>
+                <version>4.2.8</version>
+            </dependency>
+
+            <!-- tests -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <!-- this is needed or IntelliJ gives junit.jar or junit-platform-launcher:1.3.2 not found errors -->
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-launcher</artifactId>
+                <version>1.7.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.8.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-test</artifactId>
+                <version>${kotlin.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

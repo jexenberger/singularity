@@ -1,0 +1,60 @@
+{
+  "ref": "alphas/Stakeholders",
+  "area" : "Customer",
+  "stateDefs" : [
+    {
+      "ref": "alphas/Stakeholders/Recognized",
+      "description": "Recognized",
+      "card": [
+        "Stakeholder groups identified",
+        "Key stakeholder groups identified"
+      ]
+    },
+    {
+      "ref": "alphas/Stakeholders/Represented",
+      "description": "Represented",
+      "card": [
+        "Responsibilities Agreed",
+        "Representatives Authorised",
+        "Collaboration Approach Agreed",
+        "Way of working supported and represented"
+      ]
+    },
+    {
+      "ref": "alphas/Stakeholders/Involved",
+      "description": "Involved",
+      "card": [
+        "Representatives assist the team",
+        "Timely feedback and decisions provided",
+        "Changes promptly communicated"
+      ]
+    },
+    {
+      "ref": "alphas/Stakeholders/InAgreement",
+      "description": "In Agreement",
+      "card": [
+        "Minimal expectations agreed",
+        "Representatives happy with their involvement",
+        "Representatives input valued",
+        "Team's input valued",
+        "Priorities clear and perspectives balanced"
+      ]
+    },
+    {
+      "ref": "alphas/Stakeholders/Deployment",
+      "description": "Satisfied for deployment",
+      "card": [
+        "Stakeholder feedback provided",
+        "System ready for deployment"
+      ]
+    },
+    {
+      "ref": "alphas/Stakeholders/Satisfied",
+      "description": "Satisfied in Use",
+      "card": [
+        "Feedback on system use available",
+        "System meets expectations"
+      ]
+    }
+  ]
+}

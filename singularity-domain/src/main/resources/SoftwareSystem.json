@@ -1,0 +1,76 @@
+{
+  "ref": "alphas/SoftwareSystem",
+  "area": "SoftwareSystem",
+  "stateDefs": [
+    {
+      "ref": "alphas/SoftwareSystem/ArchitectureSelected",
+      "description": "Architecture Selected",
+      "card": [
+        "Architecture selection criteria agreed",
+        "HW platforms identified",
+        "Technologies selected",
+        "System boundary known",
+        "Decisions on system organization made",
+        "Buy, build, reuse, decisions made",
+        "Key technical risks agreed to"
+      ]
+    },
+    {
+      "ref": "alphas/SoftwareSystem/Demonstrable",
+      "description": "Demonstrable",
+      "card": [
+        "Key architectural characteristics demonstrated",
+        "System exercised and performance measured",
+        "Critical HW configurations demonstrated",
+        "Critical Interfaces demonstrated",
+        "Integration with environment demonstrated",
+        "Architecture accepted as fit-for-purpose"
+      ]
+    },
+    {
+      "ref": "alphas/SoftwareSystem/Usable",
+      "description": "Usable",
+      "card": [
+        "System can be operated",
+        "System functionality tested",
+        "System performance acceptable",
+        "Defect levels acceptable",
+        "System fully documented",
+        "Release content known",
+        "Added value clear"
+      ]
+    },
+    {
+      "ref": "alphas/SoftwareSystem/Ready",
+      "description": "Ready",
+      "card": [
+        "User documentation available",
+        "System accepted as fit-for-purpose",
+        "Stakeholders want the system",
+        "Operational support in place"
+      ]
+    },
+    {
+      "ref": "alphas/SoftwareSystem/Operational",
+      "description": "Operational",
+      "card": [
+        "System available for use",
+        "System live",
+        "Agreed service levels supported"
+      ]
+    },
+    {
+      "ref": "alphas/SoftwareSystem/Retired",
+      "description": "Retired",
+      "card": [
+        "Replaced or discontinued",
+        "No longer supported",
+        "No authorized users",
+        "Updates stopped"
+      ]
+    }
+
+
+
+  ]
+}

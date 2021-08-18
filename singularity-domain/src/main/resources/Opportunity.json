@@ -1,0 +1,66 @@
+{
+  "ref": "alphas/Stakeholders",
+  "area": "Customer",
+  "stateDefs": [
+    {
+      "ref": "alphas/Opportunity/Identified",
+      "description": "Identified",
+      "card": [
+        "Idea behind opportunity identified",
+        "At least one investing Stakeholder interested",
+        "Other stakeholders identified"
+      ]
+    },
+    {
+      "ref": "alphas/Opportunity/SolutionNeeded",
+      "description": "Solution Needed",
+      "card": [
+        "Solution Identified",
+        "Stakeholder's needs established",
+        "Problems and root causes identified",
+        "Need for a solution confirmed",
+        "At least one solution proposed"
+      ]
+    },
+    {
+      "ref": "alphas/Opportunity/ValueEstablished",
+      "description": "ValueEstablished",
+      "card": [
+        "Opportunity value quantified",
+        "Solution impact understood",
+        "System value understood",
+        "Success criteria clear",
+        "Outcomes clear and quantified"
+      ]
+    },
+    {
+      "ref": "alphas/Opportunity/Viable",
+      "description": "Viable",
+      "card": [
+        "Solution outlined",
+        "Solution possible within constraints",
+        "Risks acceptable and manageable",
+        "Solution profitable",
+        "Reasons to develop solution understood",
+        "Pursuit viable"
+      ]
+    },
+    {
+      "ref": "alphas/Opportunity/Addressed",
+      "description": "Addressed",
+      "card": [
+        "Opportunity addressed",
+        "Solution worth deploying",
+        "Stakeholders satisfied"
+      ]
+    },
+    {
+      "ref": "alphas/Opportunity/BenefitAccrued",
+      "description": "Benefit Accrued",
+      "card": [
+        "Solution accrues benefits",
+        "ROI acceptable"
+      ]
+    }
+  ]
+}

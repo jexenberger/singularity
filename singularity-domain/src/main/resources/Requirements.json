@@ -1,0 +1,76 @@
+{
+  "ref": "alphas/Requirements",
+  "area": "Solution",
+  "stateDefs": [
+    {
+      "ref": "alphas/Requirements/Conceived",
+      "description": "Conceived",
+      "card": [
+        "Stakeholders agree system is to be produced",
+        "Users identified",
+        "Funding stakeholders identified",
+        "Opportunity clear"
+      ]
+    },
+    {
+      "ref": "alphas/Requirements/Bounded",
+      "description": "Bounded",
+      "card": [
+        "Development stakeholders identified",
+        "System purpose agreed",
+        "System success clear",
+        "Shared solution understanding exists",
+        "Requirement's format agreed",
+        "Requirements management in place",
+        "Prioritization scheme clear",
+        "Constraints identified and considered",
+        "Assumptions clear"
+      ]
+    },
+    {
+      "ref": "alphas/Requirements/Coherent",
+      "description": "Coherent",
+      "card": [
+        "Requirements shared",
+        "Requirements origin clear",
+        "Rationale clear",
+        "Conflicts addressed",
+        "Essential characteristics clear",
+        "Key usage scenarios explained",
+        "Priorities clear",
+        "Impact understood",
+        "Teams knows and agrees on what to deliver"
+      ]
+    },
+    {
+      "ref": "alphas/Requirements/Acceptable",
+      "description": "Acceptable",
+      "card": [
+        "Acceptable solution described",
+        "Change under control",
+        "Value to be realized clear",
+        "Clear how opportunity is addressed",
+        "Testable"
+      ]
+    },
+    {
+      "ref": "alphas/Requirements/Addressed",
+      "description": "Addressed",
+      "card": [
+        "Enough addressed to be acceptable",
+        "Requirements and system match",
+        "Value realized clear",
+        "System worth making operational"
+      ]
+    },
+    {
+      "ref": "alphas/Requirements/Fulfilled",
+      "description": "Fulfilled",
+      "card": [
+        "Stakeholders accept requirements",
+        "No hindering requirements",
+        "Requirements fully satisfied"
+      ]
+    }
+  ]
+}

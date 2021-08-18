@@ -1,0 +1,73 @@
+{
+  "ref": "alphas/WayOfWorking",
+  "area": "Endeavour",
+  "stateDefs": [
+    {
+      "ref": "alphas/Team/PrinciplesEstablished",
+      "description": "Principles Established",
+      "card": [
+        "Team actively support principles",
+        "Stakeholders agree with principles",
+        "Tool needs agreed",
+        "Approach recommended",
+        "Operational context understood",
+        "Practice and tool constraints known"
+      ]
+    },
+    {
+      "ref": "alphas/Team/FoundationEstablished",
+      "description": "Foundation Established",
+      "card": [
+        "Key practices and tools selected",
+        "Practices need to start work agreed",
+        "Non-negotiable practices and tools identified",
+        "Gaps between available and needed way-of-working",
+        "Gaps in capability understood",
+        "Integrated way of working available"
+      ]
+    },
+    {
+      "ref": "alphas/Team/InUse",
+      "description": "In Use",
+      "card": [
+        "Practices and tools in use",
+        "Regularly inspected",
+        "Adapted to context",
+        "Supported by team",
+        "Feedback mechanisms in place",
+        "Practices and tools support collaboration"
+      ]
+    },
+    {
+      "ref": "alphas/Team/InPlace",
+      "description": "In Place",
+      "card": [
+        "Used by whole team",
+        "Accessible to whole team",
+        "Inspected and adapted by whole team"
+      ]
+    },
+    {
+      "ref": "alphas/Team/WorkingWell",
+      "description": "Working Well",
+      "card": [
+        "Predictable progresses being made",
+        "Practices naturally applied",
+        "Tools naturally support way-of-work",
+        "Continually Tuned"
+      ]
+    },
+    {
+      "ref": "alphas/Team/Retired",
+      "description": "Retired",
+      "card": [
+        "No longer in use",
+        "Lessons learned shared"
+      ]
+    }
+
+
+
+
+  ]
+}
