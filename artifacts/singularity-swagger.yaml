@@ -48,7 +48,7 @@ security:
   - BearerAuth: []
 
 paths:
-  /system:
+  /systems:
 
     post:
       summary: "Create System"
@@ -108,13 +108,9 @@ paths:
           schema:
             type: "string"
         - in: "query"
-          name: "pageNumber"
+          name: "page"
           schema:
             type: "integer"
-        - in: "query"
-          name: "pageSize"
-          schema:
-            type: "integer"            
       responses:
         "401":
           description: "Unauthorized"
@@ -135,7 +131,7 @@ paths:
           
         
 
-  /system/{id}:
+  /systems/{id}:
     put:
       tags:
         - "system"
@@ -193,7 +189,7 @@ paths:
         "200":
           $ref: "#/components/schemas/System"          
           
-  /system/{id}/team:
+  /systems/{id}/team:
 
     post:
       tags:
@@ -231,7 +227,7 @@ paths:
           $ref: "#/components/schemas/System"
           
 
-  /system/{id}/alphas/{alphaId}/states/{stateId}/card/activation:
+  /systems/{id}/alphas/{alphaId}/states/{stateId}/card/activation:
     post:
       tags:
       - "card"
@@ -286,7 +282,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/CheckListItemActivation"
 
-  /system/{id}/alphas/{alphaId}/states/{stateId}/card:
+  /systems/{id}/alphas/{alphaId}/states/{stateId}/card:
     put:
       tags:
       - "checklist"
@@ -335,7 +331,7 @@ paths:
           $ref: "#/components/schemas/System"
           
           
-  /system/{id}/alphas/{alphaId}/states/{stateId}:
+  /systems/{id}/alphas/{alphaId}/states/{stateId}:
     get:
       tags:
       - "state"
@@ -673,12 +669,16 @@ components:
     Page:
       type: "object"
       properties:
-        pageNumber:
+        page:
           type: "integer"
         result:
           type: "array"
           items:
             $ref: "#/components/schemas/ResultSet"
+        links:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Link"
 
 
 externalDocs:

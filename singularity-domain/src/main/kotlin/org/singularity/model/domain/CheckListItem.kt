@@ -15,6 +15,10 @@ data class CheckListItem(
         return CheckListItem(id, sequence, body, enabled, !answer, history, comments)
     }
 
+    fun answer(answer: Boolean) : CheckListItem {
+        return CheckListItem(id, sequence, body, enabled, answer, history, comments)
+    }
+
     fun check(): CheckListItem {
         return CheckListItem(id, sequence, body, enabled, true, history, comments)
     }

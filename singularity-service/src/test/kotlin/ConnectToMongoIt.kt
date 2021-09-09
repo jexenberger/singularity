@@ -5,6 +5,7 @@ import org.singularity.model.domain.SoftwareSystem
 import org.singularity.service.SingularityApp
 import org.singularity.service.SystemDAO
 import org.singularity.service.SystemService
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -22,7 +23,7 @@ class ConnectToMongoIt {
             name = "test",
             blurb = "A test",
             owner = "Acme Inc.",
-            nextDeliverableDate = LocalDateTime.now()
+            nextDeliverableDate = LocalDate.now()
         )
         dao.save(system = system)
 

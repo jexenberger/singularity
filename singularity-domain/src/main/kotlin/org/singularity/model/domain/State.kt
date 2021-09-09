@@ -50,4 +50,14 @@ data class State(
     }
 
 
+    fun updateItems(updateItems: List<Pair<String, Boolean>>): State {
+        val card = card.map {
+            val existing = updateItems.find { update -> update.first == it.id }
+            if (existing != null) it.answer(existing.second) else it
+
+        }
+        return State(id, ref, name, description, sequence, card, history, riskFactor, comments)
+    }
+
+
 }

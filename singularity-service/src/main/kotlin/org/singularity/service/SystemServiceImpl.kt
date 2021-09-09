@@ -3,13 +3,16 @@ package org.singularity.service
 import com.mongodb.client.MongoClient
 import org.singularity.model.domain.SoftwareSystem
 
-class SystemServiceImpl(client: MongoClient, val dao:SystemDAO = SystemDAO(client)) : SystemService by dao {
+class SystemServiceImpl(client: MongoClient, private val dao:SystemDAO = SystemDAO(client)) : SystemService by dao {
 
-    override fun save(system: SoftwareSystem): String {
+    override fun save(system: SoftwareSystem, replace:Boolean): SoftwareSystem {
+        if (replace) {
+            dao.save(system.calcState())
+        }
         return get(system.id)?.let {
             val newSystem = it.update(system.name, system.blurb, system.owner, system.nextDeliverableDate)
             dao.save(newSystem.calcState())
-            return it.id
+            return newSystem
         } ?: dao.save(system.calcState())
     }
 }

@@ -43,7 +43,7 @@ class ModelLoader {
                             id = cnt.toString(),
                             sequence = cnt.toShort(),
                             body = it,
-                            enabled = true,
+                            enabled = false,
                             answer = false,
                             history = emptyList(),
                         )

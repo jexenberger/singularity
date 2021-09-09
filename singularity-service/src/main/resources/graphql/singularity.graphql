@@ -1,0 +1,152 @@
+scalar Date
+scalar DateTime
+
+enum Area {
+    Customer,
+    Solution,
+    Endeavour
+}
+
+enum AlphaName {
+    Stakeholders,
+    Requirements,
+    Opportunity,
+    SoftwareSystem,
+    Team,
+    WayOfWorking,
+    Work
+}
+
+enum Competency {
+    StakeHolderRepresentation,
+    Analysis,
+    Development,
+    Testing,
+    Leadership,
+    Management
+}
+
+interface Label {
+    key: ID!
+    label: String
+}
+
+type Comment implements Label {
+    key: ID!
+    label: String
+    timestamp: DateTime
+}
+
+type StateType implements Label {
+    key: ID!
+    label: String
+}
+
+type StateHistory {
+    newState: State!
+    oldState: State!
+    timestamp: DateTime!
+}
+
+type Alpha {
+    id: ID!
+    ref: ID!
+    name: AlphaName!
+    states: [State]!
+    history: [StateHistory]
+    currentState: StateType
+    state(id: ID!) : State!
+}
+
+type AuditTrail {
+    id: ID!
+    actionedBy: String!
+    timestamp: DateTime!
+    reason: String!
+    changes: [String]!
+}
+
+type CheckListItem {
+    id: ID!
+    sequence: Int!,
+    body: String!,
+    enabled: Boolean,
+    answer: Boolean,
+    history: [AuditTrail]!
+    comments: [Comment]
+}
+
+type State {
+    id: ID!
+    ref: ID!
+    name: String!
+    description: String!
+    sequence: Int
+    comments: [Comment]!
+    history: [StateHistory]
+    riskFactor: Int
+    card: [CheckListItem]
+    updateCard(newCard: [CardItem]): [CheckListItem]!
+}
+
+type TeamMember {
+    id: ID!
+    name: String!
+    organisation: String!
+    competency: [Competency!]!
+    email: String
+    number: String
+}
+
+type SoftwareSystem {
+    id: ID!
+    name: String!
+    blurb: String!
+    owner: String!
+    nextDeliveryDate: Date
+    risk: Int
+    alphas: [Alpha]!
+    team: [TeamMember]!
+    createdDateTime: [DateTime]!
+    alpha(name: AlphaName): Alpha!
+
+    saveTeamMember(input: TeamMemberInput!) : TeamMember
+    removeTeamMember(teamMemberId: ID!) : SoftwareSystem
+}
+
+input TeamMemberInput {
+    name: String!
+    organisation: String!
+    competency: [Competency]!
+    email: String
+    number: String
+    id: ID
+}
+
+input SoftwareSystemInput {
+    id: ID = null
+    name: String!
+    owner: String!
+    blurb: String!
+    nextDeliveryDate: Date = null
+    team: [TeamMemberInput] = null
+}
+
+input CardItem {
+    id: ID!
+    answer: Boolean!
+}
+
+input SoftwareSystemFilter {
+    name: String = null
+    owner: String = null
+}
+
+type Query {
+    byId(id: ID!): SoftwareSystem
+    byFilter(size: Int! = 10, page: Int! = 1, filter: SoftwareSystemFilter = null): [SoftwareSystem]
+    save(system: SoftwareSystemInput!) : SoftwareSystem
+}
+
+
+

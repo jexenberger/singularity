@@ -13,27 +13,27 @@ class SingularityApi(private val service: SystemService, json: Json) : HttpRoute
 
 
     override fun build() {
-        post<SoftwareSystem>("/system") { it, _ ->
-            created("/system/${service.save(it)}")
+        post<SoftwareSystem>("/systems") { it, _ ->
+            created("/systems/${service.save(it).id}")
         }
-        get("/system") { req ->
-            ok(Page(1, service.getAll(SystemQuery())))
+        get("/systems") { req ->
+            ok(service.find(SystemQuery(req)))
         }
-        get("/system/{id}") { req ->
+        get("/systems/{id}") { req ->
             service.get(req.fromPath("id"))?.let {
                 ok(it)
             } ?: notFound()
         }
-        put<SoftwareSystem>("/system/{id}") { system, _ ->
+        put<SoftwareSystem>("/systems/{id}") { system, _ ->
             ok(service.save(system))
         }
-        put<List<TeamMember>>("/system/{id}/team") { team, req ->
+        put<List<TeamMember>>("/systems/{id}/team") { team, req ->
             ok(service.saveTeam(req.fromPath("id"), team))
         }
-        get("/system/{id}/alphas/{alphaId}/states/{stateId}") { req ->
+        get("/systems/{id}/alphas/{alphaId}/states/{stateId}") { req ->
             ok(service.getState(req.fromPath("id"), req.fromPath("stateId")))
         }
-        put<CheckListActivation>("/system/{id}/alphas/{alphaId}/states/{stateId}/card/activation") { act, req ->
+        put<CheckListActivation>("/systems/{id}/alphas/{alphaId}/states/{stateId}/card/activation") { act, req ->
             val user = req.userPrincipal.map { it.name }  ?: ""
             ok(service.activation(req.fromPath("id"),req.fromPath("stateId"),user.toString(),act))
         }

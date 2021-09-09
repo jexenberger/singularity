@@ -4,13 +4,17 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.ReplaceOptions
-import com.mongodb.client.model.UpdateOptions
+import org.bson.conversions.Bson
 import org.litote.kmongo.*;
 import org.singularity.model.domain.SoftwareSystem
 
-class SystemDAO(private val mongo: MongoClient) : SystemService{
+class SystemDAO(private val mongo: MongoClient) : SystemService {
 
-    private val database: MongoDatabase  by lazy {
+    fun clearCollection() {
+        this.collection.deleteMany("{}")
+    }
+
+    private val database: MongoDatabase by lazy {
         mongo.getDatabase("singularity")!!
     }
 
@@ -18,17 +22,26 @@ class SystemDAO(private val mongo: MongoClient) : SystemService{
         database.getCollection<SoftwareSystem>("software_system")
     }
 
-    override fun save(system: SoftwareSystem): String {
-       collection.replaceOneById(system.id, system, ReplaceOptions().upsert(true))
-       return system.id
+    override fun save(system: SoftwareSystem, replace:Boolean): SoftwareSystem {
+        collection.replaceOneById(system.id, system, ReplaceOptions().upsert(true))
+        return system
     }
 
-    override fun get(id: String) : SoftwareSystem? {
+    override fun get(id: String): SoftwareSystem? {
         return collection.findOne(SoftwareSystem::id eq id)
     }
 
-    override fun getAll(query: SystemQuery): List<SoftwareSystem> {
-        return collection.find().toList()
+    override fun find(queryParameters: SystemQuery): Page<SoftwareSystem> {
+        val filters = listOf<Bson>()
+        queryParameters.name?.let { filters + (queryParameters::name regex "^${it}") }
+        queryParameters.owner?.let { filters + (queryParameters::owner regex "^${it}") }
+        queryParameters.risk?.let { filters + (queryParameters::risk lte it) }
+
+        return page(queryParameters) {
+            collection
+                .find<SoftwareSystem>(and(filters))
+                .sort(ascending(queryParameters::name))
+        }
     }
 
 
