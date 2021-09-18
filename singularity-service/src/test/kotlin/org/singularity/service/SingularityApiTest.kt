@@ -6,12 +6,12 @@ import net.odoframework.kt.extensions.post
 import net.odoframework.kt.extensions.put
 import net.odoframework.kt.extensions.toObject
 import net.odoframework.service.MockInvocationContext
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.singularity.model.domain.Competency
 import org.singularity.model.domain.SoftwareSystem
 import org.singularity.model.domain.TeamMember
 import java.time.LocalDate
-import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -20,9 +20,14 @@ class SingularityApiTest {
 
     val app = Mongo.mockedApp
 
+
+    @BeforeEach
+    internal fun setUp() {
+        app.get<SystemDAO>()!!.clearCollection()
+    }
+
     @Test
     internal fun createSaveSoftwareSystem() {
-        app.get<SystemDAO>()?.clearCollection()
         val api = app.get<SingularityApi>()!!
         val json = app.get<Json>()!!
 
@@ -70,7 +75,6 @@ class SingularityApiTest {
 
     @Test
     internal fun findAll() {
-        app.get<SystemDAO>()?.clearCollection()
         val api = app.get<SingularityApi>()!!
         val json = app.get<Json>()!!
         val context = MockInvocationContext(createSystem())
@@ -88,9 +92,10 @@ class SingularityApiTest {
             path = "/systems"
             addQueryParam("name", "Test")
             addQueryParam("page", 1)
+            addQueryParam("size", 25)
         }
         val result = api.apply(query, context)
-        val page = result.toObject<Page<SystemQuery>>()
+        val page = result.toObject<SoftwareSystemPage>()
         assertEquals(25, page.result.size)
         assertEquals(1, page.links.size)
         assertEquals("next", page.links[0].rel)
@@ -99,8 +104,9 @@ class SingularityApiTest {
             path = "/systems"
             addQueryParam("name", "Test")
             addQueryParam("page", 5)
+            addQueryParam("size", 25)
         }
-        val lastPage = api.apply(lastPageQuery, context).toObject<Page<SystemQuery>>()
+        val lastPage = api.apply(lastPageQuery, context).toObject<SoftwareSystemPage>()
         assertEquals(1, lastPage.result.size)
         assertEquals(1, lastPage.links.size)
         assertEquals("prev", lastPage.links[0].rel)
@@ -109,8 +115,9 @@ class SingularityApiTest {
             path = "/systems"
             addQueryParam("name", "Test")
             addQueryParam("page", 3)
+            addQueryParam("size", 25)
         }
-        val middlePage = api.apply(middlePageQuery, context).toObject<Page<SystemQuery>>()
+        val middlePage = api.apply(middlePageQuery, context).toObject<SoftwareSystemPage>()
         assertEquals(25, middlePage.result.size)
         assertEquals(2, middlePage.links.size)
         assertEquals("next", middlePage.links[0].rel)
@@ -120,7 +127,6 @@ class SingularityApiTest {
 
     @Test
     internal fun testSaveTeamMembers() {
-        app.get<SystemDAO>()?.clearCollection()
         val api = app.get<SingularityApi>()!!
         val json = app.get<Json>()!!
         val context = MockInvocationContext(createSystem())
@@ -140,7 +146,7 @@ class SingularityApiTest {
         )
         val saveTeam = put(json) {
             path = "/systems/${system}/team"
-            setBodyAsObject(arrayListOf(teamMember))
+            setBodyAsObject(TeamPage(0, listOf(teamMember)))
         }
         assertEquals(200, api.apply(saveTeam, context).statusCode)
         val getTeam = get(json) {

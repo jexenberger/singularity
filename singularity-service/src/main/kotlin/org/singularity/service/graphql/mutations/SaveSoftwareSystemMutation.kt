@@ -19,7 +19,7 @@ class SaveSoftwareSystemMutation(val service: SystemService) : DataFetcher<Softw
         val name = input.required<String>(SoftwareSystem::name.name)
         val owner = input.required<String>(SoftwareSystem::owner.name)
         val blurb = input.required<String>(SoftwareSystem::blurb.name)
-        val id = input.valueAs<String>(SoftwareSystem::id.name) ?: UUID.randomUUID().toString()
+        val id = input.valueAs<String>("id") ?: UUID.randomUUID().toString()
         val nextDeliveryDate = input.valueAs<LocalDate>(SoftwareSystem::nextDeliverableDate.name)
 
         val team = input
@@ -31,7 +31,7 @@ class SaveSoftwareSystemMutation(val service: SystemService) : DataFetcher<Softw
                         competency = memberDetails.required<List<String>>(TeamMember::competency.name).map { Competency.valueOf(it) },
                         email = memberDetails.valueAs<String>(TeamMember::email.name),
                         number = memberDetails.valueAs<String>(TeamMember::number.name),
-                        id = memberDetails.valueAs<String>(TeamMember::id.name) ?: UUID.randomUUID().toString()
+                        _id = memberDetails.valueAs<String>("id") ?: UUID.randomUUID().toString()
                     )
                 }
             } ?: emptyList()
@@ -45,7 +45,7 @@ class SaveSoftwareSystemMutation(val service: SystemService) : DataFetcher<Softw
             blurb = blurb,
             nextDeliverableDate = nextDeliveryDate,
             team = team,
-            id = id
+            _id = id
         ))
         environment.setCtxValue("system", save)
         return save

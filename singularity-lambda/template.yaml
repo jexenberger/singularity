@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Singularity - Lambda deployment
+
+  SAM Template for Lambda deployment
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 20
+
+
+
+Api:
+  Type: AWS::Serverless::Api
+  Properties:
+    StageName: Prod
+    Auth:
+      DefaultAuthorizer: AWS_IAM
+      AddDefaultAuthorizerToCorsPreflight: true
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+      AllowCredentials: true
+    GatewayResponses:
+      DEFAULT_4xx:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+        ResponseTemplates:
+          "application/json": { "message": "Thar she blows" }
+      DEFAULT_5xx:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+        ResponseTemplates:
+          "application/json": { "message": "Thar she blows" }
+
+Resources:
+  SingularityFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: .
+      Handler: net.odoframework.awslambda.LambdaRequestHandler
+      Runtime: java11
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          "singularity.mongodb.connection.string": "mongodb://test"
+      Events:
+        GraphQL:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /singularity
+            Method: post
+            Auth:
+              Authorizer: AWS_IAM
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  SingularityApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/singularity/"
+  Singularity:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt Singularity.Arn
+  SingularityIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt SingularityFunctionRole.Arn

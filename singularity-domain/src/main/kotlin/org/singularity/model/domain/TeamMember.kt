@@ -1,14 +1,17 @@
 package org.singularity.model.domain
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.util.*
 
+@Serializable
 data class TeamMember(
     val name: String,
     val organisation: String,
     val competency: List<Competency>,
     val email: String? = null,
     val number: String? = null,
-    override val id: String = UUID.randomUUID().toString(),
+    @SerialName("id") override val _id: String = UUID.randomUUID().toString(),
 ) : Entity {
 
 

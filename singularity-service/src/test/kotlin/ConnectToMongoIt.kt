@@ -3,10 +3,8 @@ import net.odoframework.kt.extensions.get
 import org.junit.jupiter.api.Test
 import org.singularity.model.domain.SoftwareSystem
 import org.singularity.service.SingularityApp
-import org.singularity.service.SystemDAO
 import org.singularity.service.SystemService
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 class ConnectToMongoIt {
@@ -19,7 +17,7 @@ class ConnectToMongoIt {
 
         val id = UUID.randomUUID().toString()
         val system = SoftwareSystem(
-            id = id,
+            _id = id,
             name = "test",
             blurb = "A test",
             owner = "Acme Inc.",

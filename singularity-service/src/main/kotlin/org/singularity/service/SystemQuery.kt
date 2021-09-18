@@ -15,8 +15,9 @@ class SystemQuery(
         name: String? = request.getQueryParam("name").orElse(null),
         owner: String? = request.getQueryParam("owner").orElse(null),
         risk: Int? = request.getQueryParamAsLong("risk").map { it.toInt() }.orElse(null),
-        pageNumber: Int = request.getQueryParamAsLong("page").map { it.toInt() }.orElse(1)
-    ) : this(name, owner, risk, pageNumber)
+        pageNumber: Int = request.getQueryParamAsLong("page").map { it.toInt() }.orElse(1),
+        size: Int = request.getQueryParamAsLong("size").map { it.toInt() }.orElse(10),
+    ) : this(name, owner, risk, pageNumber, size)
 
     override fun toParams(): String {
         var query = ""

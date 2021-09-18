@@ -11,3 +11,4 @@ val LABEL = TypeResolver {
         else -> null
     }
 }
+

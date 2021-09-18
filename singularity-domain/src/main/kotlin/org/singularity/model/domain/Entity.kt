@@ -1,5 +1,7 @@
 package org.singularity.model.domain
 
 interface Entity {
-    val id:String
+    val _id:String
+
+    val id:String get() = _id
 }

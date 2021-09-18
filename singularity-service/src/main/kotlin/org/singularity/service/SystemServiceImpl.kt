@@ -9,7 +9,7 @@ class SystemServiceImpl(client: MongoClient, private val dao:SystemDAO = SystemD
         if (replace) {
             dao.save(system.calcState())
         }
-        return get(system.id)?.let {
+        return get(system._id)?.let {
             val newSystem = it.update(system.name, system.blurb, system.owner, system.nextDeliverableDate)
             dao.save(newSystem.calcState())
             return newSystem

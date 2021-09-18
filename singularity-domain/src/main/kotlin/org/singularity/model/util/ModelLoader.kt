@@ -3,23 +3,28 @@ package org.singularity.model.util
 import net.odoframework.container.GsonJson
 import org.singularity.model.domain.Alpha
 import org.singularity.model.domain.AlphaName
-import org.singularity.model.domain.CheckListItem
+import org.singularity.model.domain.Question
 import org.singularity.model.domain.State
 import org.singularity.model.meta.AlphaDefinition
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 import java.time.LocalDateTime
-import java.util.*
 
 class ModelLoader {
     companion object {
         val GSON = GsonJson()
+        val CACHE = mutableMapOf<AlphaName, AlphaDefinition>()
 
         fun loadAlpha(alpha: AlphaName): AlphaDefinition {
+            if (CACHE.containsKey(alpha)) {
+                return CACHE[alpha]!!
+            }
             val out = ByteArrayOutputStream()
             ModelLoader::class.java.getResourceAsStream("/${alpha.name}.json")!!.copyTo(out)
             val json = out.toString(Charset.defaultCharset())
-            return GSON.unmarshal(json, AlphaDefinition::class.java)
+            val alphaDefinition = GSON.unmarshal(json, AlphaDefinition::class.java)
+            CACHE[alpha] = alphaDefinition
+            return alphaDefinition
         }
 
         fun createModel(): List<Alpha> =
@@ -33,16 +38,16 @@ class ModelLoader {
             val states = metaModel.stateDefs.mapIndexed { k, it ->
                 val name = it.ref.split("/")[2]
                 State(
-                    id = name.replace("/","::"),
+                    _id = name.replace("/","::"),
                     ref = it.ref,
                     name = name,
                     description = it.description,
                     sequence = k.toShort(),
                     card = it.card.mapIndexed{ cnt, it ->
-                        CheckListItem(
-                            id = cnt.toString(),
+                        Question(
+                            _id = cnt.toString(),
                             sequence = cnt.toShort(),
-                            body = it,
+                            question = it,
                             enabled = false,
                             answer = false,
                             history = emptyList(),
@@ -51,7 +56,7 @@ class ModelLoader {
                 )
             }
             return Alpha(
-                id = alpha.name,
+                _id = alpha.name,
                 name = alpha,
                 ref = metaModel.ref,
                 dateEstablished = LocalDateTime.now(),

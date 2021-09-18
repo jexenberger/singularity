@@ -66,10 +66,10 @@ type AuditTrail {
     changes: [String]!
 }
 
-type CheckListItem {
+type Question {
     id: ID!
     sequence: Int!,
-    body: String!,
+    question: String!,
     enabled: Boolean,
     answer: Boolean,
     history: [AuditTrail]!
@@ -85,8 +85,10 @@ type State {
     comments: [Comment]!
     history: [StateHistory]
     riskFactor: Int
-    card: [CheckListItem]
-    updateCard(newCard: [CardItem]): [CheckListItem]!
+    card: [Question]!
+    activeCard: [Question]!
+    updateCard(who: String!, newCard: [QuestionAnswer!]!): [Question]!
+    enableQuestion(id: ID!, enabledOrDisabled:Boolean, reason:String!, who:String!) : [Question]!
 }
 
 type TeamMember {
@@ -111,7 +113,7 @@ type SoftwareSystem {
     alpha(name: AlphaName): Alpha!
 
     saveTeamMember(input: TeamMemberInput!) : TeamMember
-    removeTeamMember(teamMemberId: ID!) : SoftwareSystem
+    removeTeamMember(teamMemberid: ID!) : SoftwareSystem
 }
 
 input TeamMemberInput {
@@ -132,7 +134,7 @@ input SoftwareSystemInput {
     team: [TeamMemberInput] = null
 }
 
-input CardItem {
+input QuestionAnswer {
     id: ID!
     answer: Boolean!
 }

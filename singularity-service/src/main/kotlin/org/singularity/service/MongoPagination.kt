@@ -1,18 +1,19 @@
 package org.singularity.service
 
 import com.mongodb.client.FindIterable
+import org.singularity.model.domain.SoftwareSystem
 
 
-fun <T> page(query: Query, filter: ()-> FindIterable<T>) : Page<T> {
+fun  page(query: Query, filter: ()-> FindIterable<SoftwareSystem>) : SoftwareSystemPage {
     return MongoPagination(query,  filter()).page()
 }
 
-class MongoPagination<T>(private val query: Query, private val filter: FindIterable<T>) {
+class MongoPagination(private val query: Query, private val filter: FindIterable<SoftwareSystem>) {
 
-    fun page(): Page<T> {
+    fun page(): SoftwareSystemPage {
         val count = filter.count()
         val dataSet = filter.skip(query.skipSize).limit(query.size)
-        return Page(query.page, dataSet.toList(), query.createLinks(count, query.page), count.toLong())
+        return SoftwareSystemPage(query.page, dataSet.toList(), query.createLinks(count, query.page))
     }
 
 }

@@ -27,9 +27,9 @@ class SaveTeamMemberMutation(val service: SystemService) : DataFetcher<TeamMembe
             }
         val email = input.valueAs<String>(TeamMember::email.name)
         val number = input.valueAs<String>(TeamMember::number.name)
-        val id = input.valueAs<String>(TeamMember::id.name) ?: UUID.randomUUID().toString()
+        val id = input.valueAs<String>("id") ?: UUID.randomUUID().toString()
         val teamMember = TeamMember(name, organisation, competencies, email, number, id)
-        service.saveTeamMember(system.id, teamMember)
+        service.saveTeamMember(system._id, teamMember)
         return teamMember
     }
 }

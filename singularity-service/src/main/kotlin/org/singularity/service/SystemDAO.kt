@@ -23,15 +23,15 @@ class SystemDAO(private val mongo: MongoClient) : SystemService {
     }
 
     override fun save(system: SoftwareSystem, replace:Boolean): SoftwareSystem {
-        collection.replaceOneById(system.id, system, ReplaceOptions().upsert(true))
+        collection.replaceOneById(system._id, system, ReplaceOptions().upsert(true))
         return system
     }
 
     override fun get(id: String): SoftwareSystem? {
-        return collection.findOne(SoftwareSystem::id eq id)
+        return collection.findOne(SoftwareSystem::_id eq id)
     }
 
-    override fun find(queryParameters: SystemQuery): Page<SoftwareSystem> {
+    override fun find(queryParameters: SystemQuery): SoftwareSystemPage {
         val filters = listOf<Bson>()
         queryParameters.name?.let { filters + (queryParameters::name regex "^${it}") }
         queryParameters.owner?.let { filters + (queryParameters::owner regex "^${it}") }

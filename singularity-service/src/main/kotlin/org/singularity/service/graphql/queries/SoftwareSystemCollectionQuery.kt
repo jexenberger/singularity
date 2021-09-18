@@ -3,16 +3,15 @@ package org.singularity.service.graphql.queries
 import graphql.schema.DataFetcher
 import graphql.schema.DataFetchingEnvironment
 import org.singularity.model.domain.SoftwareSystem
-import org.singularity.service.Page
 import org.singularity.service.SystemQuery
 import org.singularity.service.SystemService
 import org.singularity.service.graphql.required
 import org.singularity.service.graphql.valueAs
 
-class SoftwareSystemCollectionQuery(val service: SystemService) : DataFetcher<Page<SoftwareSystem>> {
+class SoftwareSystemCollectionQuery(val service: SystemService) : DataFetcher<List<SoftwareSystem>> {
 
 
-    override fun get(environment: DataFetchingEnvironment): Page<SoftwareSystem> {
+    override fun get(environment: DataFetchingEnvironment): List<SoftwareSystem> {
 
         val size = environment.arguments.required<Int>("size")
         val page = environment.arguments.required<Int>("page")
@@ -29,7 +28,7 @@ class SoftwareSystemCollectionQuery(val service: SystemService) : DataFetcher<Pa
             size = size
         )
 
-        return service.find(query)
+        return service.find(query).result
 
     }
 }

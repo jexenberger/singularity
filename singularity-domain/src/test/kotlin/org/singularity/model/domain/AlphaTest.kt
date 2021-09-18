@@ -20,8 +20,8 @@ class AlphaTest {
     @Test
     internal fun setState() {
         val newCard = card.map { it.check() }
-        val newAlpha = model.updateStateCard(model.states[0].id, newCard)
-        val allChecked = newAlpha.getState(model.states[0].id)?.let {
+        val newAlpha = model.updateStateCard(model.states[0]._id, newCard)
+        val allChecked = newAlpha.getState(model.states[0]._id)?.let {
             it.card.foldRight(true) { it, b ->
                 b && it.answer
             }
@@ -33,10 +33,10 @@ class AlphaTest {
     internal fun calcState() {
         assertNull(model.currentState)
         val newCard = card.map { it.check() }
-        val alpha = model.updateStateCard(model.states[0].id, newCard).calcState()
-        assertTrue { alpha.currentState?.first.equals(model.states[0].id)  }
+        val alpha = model.updateStateCard(model.states[0]._id, newCard).calcState()
+        assertTrue { alpha.currentState?.first.equals(model.states[0]._id)  }
         val card2 = model.states[1].toggleCard().card
-        val alpha2 = alpha.updateStateCard(model.states[1].id, card2).calcState()
+        val alpha2 = alpha.updateStateCard(model.states[1]._id, card2).calcState()
         assertFalse { alpha.currentState?.equals(alpha2.currentState) ?: true }
     }
 
@@ -44,11 +44,11 @@ class AlphaTest {
     internal fun calcStateInvalid() {
         assertNull(model.currentState)
         val newCard = card.map { it.check() }
-        val alpha = model.updateStateCard(model.states[0].id, newCard).calcState()
+        val alpha = model.updateStateCard(model.states[0]._id, newCard).calcState()
         val theState = alpha.currentState!!
-        assertTrue { alpha.currentState?.first.equals(model.states[0].id)  }
+        assertTrue { alpha.currentState?.first.equals(model.states[0]._id)  }
         val card2 = model.states[2].toggleCard().card
-        val alpha2 = alpha.updateStateCard(model.states[2].id, card2).calcState()
+        val alpha2 = alpha.updateStateCard(model.states[2]._id, card2).calcState()
         assertEquals(theState, alpha2.currentState)
     }
 }

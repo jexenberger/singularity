@@ -14,7 +14,7 @@ class SingularityApi(private val service: SystemService, json: Json) : HttpRoute
 
     override fun build() {
         post<SoftwareSystem>("/systems") { it, _ ->
-            created("/systems/${service.save(it).id}")
+            created("/systems/${service.save(it)._id}")
         }
         get("/systems") { req ->
             ok(service.find(SystemQuery(req)))
@@ -27,8 +27,8 @@ class SingularityApi(private val service: SystemService, json: Json) : HttpRoute
         put<SoftwareSystem>("/systems/{id}") { system, _ ->
             ok(service.save(system))
         }
-        put<List<TeamMember>>("/systems/{id}/team") { team, req ->
-            ok(service.saveTeam(req.fromPath("id"), team))
+        put<TeamPage>("/systems/{id}/team") { team, req ->
+            ok(service.saveTeam(req.fromPath("id"), team.result))
         }
         get("/systems/{id}/alphas/{alphaId}/states/{stateId}") { req ->
             ok(service.getState(req.fromPath("id"), req.fromPath("stateId")))

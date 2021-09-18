@@ -1,26 +1,27 @@
 package org.singularity.model.domain
 
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import org.singularity.model.util.DateTimeSerializer
 import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
 
+@Serializable
 data class Alpha(
-    override val id: String,
+    @SerialName("id") override val _id: String,
     val name:AlphaName,
     val ref: String,
-    val dateEstablished: LocalDateTime,
+    @Serializable(with = DateTimeSerializer::class) val dateEstablished: LocalDateTime,
     val states: List<State>,
     val currentState: Pair<String, String>? = null,
     val history: List<StateHistory> = emptyList()
 ) : Entity {
 
-
-
     fun getState(id:String) : State? =
-        states.find { it.id.equals(id) }
+        states.find { it._id.equals(id) }
 
-
-
-    fun updateStateCard(id:String, card:List<CheckListItem>) : Alpha {
+    fun updateStateCard(id:String, card:List<Question>) : Alpha {
         val newState = getState(id)
             ?.updateCard(card)
             ?: throw IllegalArgumentException("$id is not a valid state for ${this.name}")
@@ -29,14 +30,14 @@ data class Alpha(
 
 
     fun setStates(states:List<State>) : Alpha {
-        return Alpha(id, name, ref, dateEstablished, states,currentState, history)
+        return Alpha(_id, name, ref, dateEstablished, states,currentState, history)
     }
 
     fun setState(state: State) : Alpha {
         val newList = states.map {
-            if (it.id.equals(state.id)) state else it
+            if (it._id.equals(state._id)) state else it
         }
-        return Alpha(id,name,ref,dateEstablished,newList, currentState).calcState()
+        return Alpha(_id,name,ref,dateEstablished,newList, currentState).calcState()
     }
 
     fun calcState() : Alpha {
@@ -46,11 +47,11 @@ data class Alpha(
         }
 
         if (sequence > -1) {
-            val newState = states[sequence].id to states[sequence].name
+            val newState = states[sequence]._id to states[sequence].name
             if (!newState.equals(currentState)) {
                 val newHistory = history.toMutableList()
                 newHistory.add(StateHistory(LocalDateTime.now(), currentState, newState))
-                return Alpha(id, name, ref, dateEstablished, states, newState, newHistory)
+                return Alpha(_id, name, ref, dateEstablished, states, newState, newHistory)
             }
         }
         return this

@@ -7,6 +7,7 @@ import graphql.schema.idl.RuntimeWiring
 import graphql.schema.idl.SchemaGenerator
 import graphql.schema.idl.SchemaParser
 import graphql.schema.idl.TypeRuntimeWiring
+import graphql.schema.visibility.BlockedFields
 import net.odoframework.util.Resource
 import org.singularity.service.SystemService
 import org.singularity.service.graphql.instrumentation.TrackingInstrumentation
@@ -14,10 +15,7 @@ import org.singularity.service.graphql.mutations.RemoveTeamMemberMutation
 import org.singularity.service.graphql.mutations.SaveSoftwareSystemMutation
 import org.singularity.service.graphql.mutations.SaveTeamMemberMutation
 import org.singularity.service.graphql.mutations.UpdateCardMutation
-import org.singularity.service.graphql.queries.SoftwareSystemCollectionQuery
-import org.singularity.service.graphql.queries.SoftwareSystemQuery
-import org.singularity.service.graphql.queries.SoftwareSystemQueryAlphas
-import org.singularity.service.graphql.queries.StateQuery
+import org.singularity.service.graphql.queries.*
 
 class SingularityGraphQL(val service: SystemService, sdl: Resource) {
 
@@ -29,6 +27,7 @@ class SingularityGraphQL(val service: SystemService, sdl: Resource) {
         val wiring = RuntimeWiring.newRuntimeWiring()
             .scalar(DATE)
             .scalar(DATE_TIME)
+            .fieldVisibility(BlockedFields.newBlock().addPattern(".*\\._id").build())
             .type("Query") { it.dataFetcher("save", SaveSoftwareSystemMutation(service)) }
             .type("SoftwareSystem") { it.dataFetcher("saveTeamMember", SaveTeamMemberMutation(service)) }
             .type("SoftwareSystem") { it.dataFetcher("removeTeamMember", RemoveTeamMemberMutation(service)) }
@@ -36,6 +35,7 @@ class SingularityGraphQL(val service: SystemService, sdl: Resource) {
             .type("Query") { it.dataFetcher("byFilter", SoftwareSystemCollectionQuery(service)) }
             .type("SoftwareSystem") { it.dataFetcher("alpha", SoftwareSystemQueryAlphas(service)) }
             .type("Alpha") { it.dataFetcher("state", StateQuery()) }
+            .type("Alpha") { it.dataFetcher("activeCard", ActiveCardQuery()) }
             .type("State") { it.dataFetcher("updateCard", UpdateCardMutation(service)) }
             .type(TypeRuntimeWiring.newTypeWiring("Label").typeResolver(LABEL).build())
             .build()

@@ -10,15 +10,18 @@
     <modules>
         <module>singularity-domain</module>
         <module>singularity-service</module>
+        <module>singularity-lambda</module>
     </modules>
     <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <kotlin.version>1.5.21</kotlin.version>
-        <odo.version>0.0.9-SNAPSHOT</odo.version>
+        <kotlin.version>1.5.30</kotlin.version>
+        <odo.version>0.1.0-SNAPSHOT</odo.version>
         <junit.version>5.7.1</junit.version>
+        <serialization.version>1.2.2</serialization.version>
+        <graphql-kotlin.version>4.2.0</graphql-kotlin.version>
     </properties>
 
     <dependencyManagement>
@@ -32,6 +35,11 @@
             <dependency>
                 <groupId>org.singularity</groupId>
                 <artifactId>singularity-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.singularity</groupId>
+                <artifactId>singularity-lambda</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -58,13 +66,32 @@
             </dependency>
             <dependency>
                 <groupId>org.litote.kmongo</groupId>
-                <artifactId>kmongo</artifactId>
-                <version>4.2.8</version>
+                <artifactId>kmongo-serialization</artifactId>
+                <version>4.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.litote.kmongo</groupId>
+                <artifactId>kmongo-id-serialization</artifactId>
+                <version>4.3.0</version>
             </dependency>
             <dependency>
                 <groupId>com.graphql-java</groupId>
                 <artifactId>graphql-java</artifactId>
                 <version>16.2</version>
+            </dependency>
+
+
+
+            <dependency>
+                <groupId>net.odoframework</groupId>
+                <artifactId>odo-aws-lambda-runtime</artifactId>
+                <version>${odo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-serialization-json</artifactId>
+                <version>${serialization.version}</version>
             </dependency>
 
             <!-- tests -->
@@ -108,7 +135,6 @@
             </dependency>
 
 
-
         </dependencies>
     </dependencyManagement>
 
@@ -123,11 +149,6 @@
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
-            <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
 
@@ -156,6 +177,32 @@
                 <configuration>
                     <jvmTarget>1.8</jvmTarget>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <compilerPlugins>
+                        <plugin>kotlinx-serialization</plugin>
+                    </compilerPlugins>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-serialization</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -32,7 +32,7 @@ interface SystemService {
 
     fun get(id: String): SoftwareSystem?
 
-    fun find(queryParameters: SystemQuery): Page<SoftwareSystem>
+    fun find(queryParameters: SystemQuery): SoftwareSystemPage
 
     fun getAlpha(id: String, alpha: AlphaName) = get(id)?.getAlpha(alpha)
 
