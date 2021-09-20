@@ -13,14 +13,15 @@ import org.singularity.service.graphql.SingularityGraphQL
 
 class SingularityGraphQLEndpoint(val graphql: SingularityGraphQL, val jsonHandler:Json) : WebFunction {
     override fun apply(t: WebRequest, u: InvocationContext<*>): WebResponse {
-        val query = t.body<String>()
+        val query = t.body
         val execution = ExecutionInput.newExecutionInput(query).localContext(mutableMapOf<String, Any>()).build()
         val result = graphql.execute(execution)
         if (result.errors.isNotEmpty()) {
             val errors = result.errors.map { it.toSpecification() }
             return userError().setCors().body(errors)
         }
-        return ok<Map<String, Any>>().setCors().body(result.getData<Map<String, Any>>())
+        val data = result.getData<Map<String, Any>>()
+        return ok<Map<String, Any>>().setCors().body(jsonHandler.marshal(data))
     }
 
     override fun getJson() = jsonHandler

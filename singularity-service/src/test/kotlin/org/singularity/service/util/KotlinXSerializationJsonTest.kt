@@ -17,4 +17,11 @@ class KotlinXSerializationJsonTest {
         val system = json.unmarshal(result, SoftwareSystem::class.java)
         assertEquals("test", system.name)
     }
+
+    @Test
+    internal fun testMarshalMap() {
+        val json = KotlinXSerializationJson()
+        val result = json.marshal(mapOf(1 to 1, 2 to 2))
+        assertNotNull(result)
+    }
 }

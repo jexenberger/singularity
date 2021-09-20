@@ -2,6 +2,7 @@ package org.singularity.service.util
 
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.serializer
+import net.odoframework.container.GsonJson
 import net.odoframework.container.util.Json
 
 class KotlinXSerializationJson : Json {
@@ -11,8 +12,16 @@ class KotlinXSerializationJson : Json {
         classDiscriminator = "#class"
     }
 
+    private val gson = GsonJson()
 
-    override fun marshal(obj: Any) = json.encodeToString(serializer(obj::class.java), obj)
+
+    override fun marshal(obj: Any) : String {
+        if (obj is Map<*,*>) {
+            return gson.marshal(obj)
+        }
+
+        return json.encodeToString(serializer(obj::class.java), obj)
+    }
 
     override fun <T : Any?> unmarshal(json: String, type: Class<T>) : T {
         val jsonStructure = this.json.parseToJsonElement(json)

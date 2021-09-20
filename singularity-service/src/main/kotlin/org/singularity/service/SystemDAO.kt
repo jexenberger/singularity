@@ -8,7 +8,7 @@ import org.bson.conversions.Bson
 import org.litote.kmongo.*;
 import org.singularity.model.domain.SoftwareSystem
 
-class SystemDAO(private val mongo: MongoClient) : SystemService {
+class SystemDAO(private val mongo: MongoClient) : SystemService, Runnable {
 
     fun clearCollection() {
         this.collection.deleteMany("{}")
@@ -42,6 +42,10 @@ class SystemDAO(private val mongo: MongoClient) : SystemService {
                 .find<SoftwareSystem>(and(filters))
                 .sort(ascending(queryParameters::name))
         }
+    }
+
+    override fun run() {
+
     }
 
 
