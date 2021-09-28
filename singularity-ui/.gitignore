@@ -1,12 +1,3 @@
-.DS_STORE
-target/
-.idea/
-*.ipr
-*.iml
-.aws-sam/
-*.toml
-
-
 .DS_Store
 node_modules
 /dist
