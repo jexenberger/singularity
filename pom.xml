@@ -11,6 +11,7 @@
         <module>singularity-domain</module>
         <module>singularity-service</module>
         <module>singularity-lambda</module>
+        <module>singularity-ui</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -22,6 +23,8 @@
         <junit.version>5.7.1</junit.version>
         <serialization.version>1.2.2</serialization.version>
         <graphql-kotlin.version>4.2.0</graphql-kotlin.version>
+        <node.version>v14.17.0</node.version>
+        <yarn.version>v1.22.10</yarn.version>
     </properties>
 
     <dependencyManagement>
